@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Specific folders to ignore
 Include/
 Scripts/
 

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+Include/
+Scripts/
+
+# Virtual environments
+venv/
+.env/
+env/
+lib/
+site-packages/
+pyvenv.cfg
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled files
+*.so
+*.dll
+*.exe
+*.out

@@ -21,6 +21,12 @@ from langchain_community.vectorstores import InMemoryVectorStore
 from config import ModelConfig, EmbeddingConfig, ChatConfig, WebConfig
 from utils import format_response
 
+import torch
+
+# Imposta dispositivo GPU se disponibile, altrimenti CPU
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Dispositivo scelto per il modello: {device}")  # Da commentare
+
 # Inizializzazione applicazione Flask
 app = Flask(__name__, static_folder = WebConfig.STATIC_FOLDER)
 
@@ -28,13 +34,17 @@ app = Flask(__name__, static_folder = WebConfig.STATIC_FOLDER)
 model = ChatOllama(
     model = ModelConfig.NAME,
     temperature  = ModelConfig.TEMPERATURE,
-    reasoning = ModelConfig.REASONING
+    reasoning = ModelConfig.REASONING,
+    device = device
 )
 
 # Inizializzazione embeddings e vectorstore
 embeddings = OllamaEmbeddings(
-    model = EmbeddingConfig.NAME
+    model = EmbeddingConfig.NAME,
 )
+
+print("Test device per modello:", device)
+print("CUDA disponibile:", torch.cuda.is_available())
 
 # Caricamento del database vettoriale da file
 vector_store = InMemoryVectorStore.load("./vs/alice.db", embedding = embeddings)

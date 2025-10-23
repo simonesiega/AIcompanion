@@ -157,6 +157,11 @@ def gui():
 # .\aicompanion\Scripts\activate
 # cd .\aicompanion\
 # python aicompanion.py
+
+# conda activate aicuda
+# cd .\aicompanion\
+# python aicompanion.py
+
 if __name__ == '__main__':
     app.run(host=WebConfig.HOST, port=WebConfig.PORT, debug=WebConfig.DEBUG)
 

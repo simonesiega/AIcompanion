@@ -1,15 +1,13 @@
-# Python
+# Python bytecode
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 
-# Specific folders to ignore
-Include/
-Scripts/
-
 # Virtual environments
 venv/
+aicuda/
+aicompanion/
 .env/
 env/
 lib/
@@ -29,8 +27,12 @@ Thumbs.db
 # Logs
 *.log
 
-# Compiled files
+# Compiled files / binaries
 *.so
 *.dll
 *.exe
 *.out
+
+# Specific folders 
+Scripts/
+Include/

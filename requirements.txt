@@ -1,7 +1,5 @@
-langchain
-langchain_ollama
-langchain_community
-
-flask
-
-pypdf
+langchain>=1.0.2
+langchain_ollama>=1.0.0
+langchain_community>=0.4
+flask>=3.1.2
+pypdf>=6.1.3

@@ -54,6 +54,7 @@ retriever = vector_store.as_retriever()
 # Formato: [('human', 'messaggio'), ('assistant', 'risposta')]
 chat_history = []
 
+
 # Funzione per la costruzione del contesto del modello
 def create_context(user_message: str, retrieved_documents: str, history: list) -> list:
     """
@@ -85,6 +86,7 @@ def create_context(user_message: str, retrieved_documents: str, history: list) -
     context_messages.append(('human', user_message))
 
     return context_messages
+
 
 # http://127.0.0.1:9000/test
 # Endpoint API: Chat con il modello
@@ -140,8 +142,6 @@ def chat():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
 
 
 # http://127.0.0.1:9000/

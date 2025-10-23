@@ -68,7 +68,7 @@ def main():
 
     # Tempo totale
     total_time = time.time() - start_time
-    print(f"\n=== Operazione completata in {total_time:.2f} secondi ===")
+    print(f"\nOperazione completata in {total_time:.2f} secondi")
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ from langchain_community.vectorstores import InMemoryVectorStore
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Moduli locali
-from core.config import EmbeddingConfig
+from config import EmbeddingConfig
 
 # py
 import time

@@ -10,20 +10,6 @@ import time
 # Domanda di prova
 question = "Raccontami brevemente la storia di Alice nel Paese delle Meraviglie."
 
-'''
---- Benchmark con device: cpu ---
-Tempo totale: 6.259 secondi
-Lunghezza risposta: 2158 caratteri
-Risposta:
-Ah, caro mio, preparati a un viaggio... un viaggio che, come la realtà stessa, può essere tanto confusa quanto affascinante. Permettimi di raccontarti la storia di Alice, una giovane signorina di sette anni, un'anima curiosa e un po' sbadata, come molti di noi.<br>Tutto ebbe inizio in una giornata d...
-
---- Benchmark con device: cuda ---
-Tempo totale: 4.627 secondi
-Lunghezza risposta: 2209 caratteri
-Risposta:
-Ah, caro mio, preparati a un viaggio... un viaggio che, come un sogno, si piega e si distorce al volere della mente. Permettimi di raccontarti la storia di Alice, una giovane signorina di campagna, un pomeriggio di estenuante noia.<br>Era seduta sulle rive di un fiume, un fiume che, per quanto mi ri...
-'''
-
 def benchmark_model(device: str):
     """
     Esegue una domanda sul modello ChatOllama e misura il tempo di risposta.

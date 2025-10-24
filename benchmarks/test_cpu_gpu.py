@@ -2,8 +2,8 @@
 from langchain_ollama import ChatOllama
 
 # Moduli locali
-from config import ModelConfig
-from utils import format_response
+from core.config import ModelConfig
+from core.utils import format_response
 
 import time
 

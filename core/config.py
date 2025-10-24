@@ -11,7 +11,9 @@ class ModelConfig:
     Tutti i parametri qui definiti devono essere considerati immutabili
     e validi per l'intera esecuzione del sistema.
     """
-    NAME: str = "gemma3:4b"  # Nome del modello AI da utilizzare (Ollama)
+    # Nome del modello AI da utilizzare (Ollama)
+    NAME: str = "gemma3:4b"  
+    # NAME: str = "gemma3:12b"  
     TEMPERATURE: float = 0.1  # Controlla la creatività: 0 = deterministico
     REASONING: bool = False  # Flag per attivare modalità reasoning (se supportata dal modello)
 

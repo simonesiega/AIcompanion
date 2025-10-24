@@ -18,8 +18,8 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import InMemoryVectorStore
 
 # Moduli locali
-from config import ModelConfig, EmbeddingConfig, ChatConfig, WebConfig
-from utils import format_response
+from core.config import ModelConfig, EmbeddingConfig, ChatConfig, WebConfig
+from core.utils import format_response
 
 import torch
 
@@ -159,7 +159,7 @@ def gui():
 # python aicompanion.py
 
 # conda activate aicuda
-# cd .\aicompanion\
+# cd Desktop\AIcompanion
 # python aicompanion.py
 
 if __name__ == '__main__':

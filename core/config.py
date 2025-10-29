@@ -58,3 +58,11 @@ class WebConfig:
     HOST: str = "127.0.0.1"  # Host locale
     PORT: int = 9000  # Porta di esecuzione dell'app Flask
     DEBUG: bool = False
+
+class BenchmarksConfig:
+    """
+    Configurazione per i benchmark CPU.
+    """
+    RUNS: int = 3  # Numero di snapshot per benchmark
+    SLEEP_TIME: int = 5  # Secondi di pausa tra uno snapshot e l'altro
+    EXCEL_FILE: str = "cpu_benchmark.xlsx"  # Nome del file Excel di output

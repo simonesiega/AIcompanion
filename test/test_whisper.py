@@ -1,6 +1,10 @@
-import whisper
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from core.config import WhisperConfig
+import whisper
 
 wmodel = whisper.load_model(name = WhisperConfig.TEST_MODEL_PATH, device=WhisperConfig.DEVICE_NAME) 
 
@@ -9,6 +13,3 @@ def speech_to_text(audio_path):
     return result
 
 print(speech_to_text("C:/Users/simone.siega/aicompanion/generated/0.wav"))
-
-# pip install openai-whisper
-# winget install ffmpeg 

@@ -15,3 +15,4 @@ soundfile
 pydub
 espeakng-loader
 audioop-lts
+openai-whisper

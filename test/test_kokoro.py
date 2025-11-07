@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from kokoro import KPipeline, KModel # Genera Audio
 import soundfile as sf # Salvare file audio
 from pydub import AudioSegment # Unire più audio insieme
@@ -14,13 +19,3 @@ def text_to_speech(text):
         sf.write(f"{KokoroConfig.TEST_GENERATED_PATH}{i}.wav", audio, KokoroConfig.AUDIO_FREQ, "PCM_16")
 
 text_to_speech("Io sono CiccioGamer89 e sono il capobranco dei miei paguri")
-
-# pip install loguru
-# pip install transformers
-# pip install misaki
-# pip install num2words
-# pip install spacy
-# pip install phonemizer
-# pip install soundfile
-# pip install pydub
-# pip install audioop-lts

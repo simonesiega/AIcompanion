@@ -66,3 +66,41 @@ class BenchmarksConfig:
     RUNS: int = 3  # Numero di snapshot per benchmark
     SLEEP_TIME: int = 5  # Secondi di pausa tra uno snapshot e l'altro
     EXCEL_FILE: str = "cpu_benchmark.xlsx"  # Nome del file Excel di output
+
+class KokoroConfig:
+    """
+    Configurazione per il sistema text-to-speech Kokoro.
+    """
+    # Percorsi dei modelli e configurazioni per ambiente di test
+    # usati nel file test/test_kokoro.py
+    TEST_MODEL_PATH: str = "../models/kokoro-v1_0.pth"
+    TEST_CONFIG_PATH: str = "../models/config.json"
+    TEST_VOICES_PATH: str = "../models/voices/"
+    TEST_VOICE_PATH: str = "../models/voices/af_jessica.pt"
+    TEST_GENERATED_PATH: str = "../generated/"
+
+    # Percorsi dei modelli e configurazioni 
+    MODEL_PATH: str = "models/kokoro-v1_0.pth"
+    CONFIG_PATH: str = "models/config.json"
+    VOICES_PATH: str = "models/voices/"
+    VOICE_PATH: str = "models/voices/af_jessica.pt"
+    GENERATED_PATH: str = "generated/"
+    
+    # Parametri audio
+    AUDIO_SPEED: float = 0.9  # Velocità di riproduzione della voce sintetizzata
+    AUDIO_FREQ: int = 24000  # Frequenza di campionamento audio
+
+class WhisperConfig:
+    """
+    Configurazione per il modello di trascrizione vocale Whisper.
+    """
+    # Percorsi del modello per ambiente di test
+    # usato nel file test/test_whisper.py
+    TEST_MODEL_PATH: str = "../models/small.pt"
+
+    # Percorso del modello
+    MODEL_PATH: str = "models/small.pt"
+
+    # Parametri
+    DEVICE_NAME: str = "cpu"  # Dispositivo su cui eseguire il modello: "cpu" o "cuda"
+    LANGUAGE: str = "it"  # Lingua di trascrizione

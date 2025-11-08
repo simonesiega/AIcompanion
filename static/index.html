@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat AI</title>
-  <link rel="stylesheet" href="static/style.css" />
+  <meta charset="UTF-8">
+  <title>AI Companion</title>
+  <link rel="stylesheet" href="static/style.css">
 </head>
-
 <body>
-  <div class="chat-container">
-    <header> Chat AI Companion </header>
+  <h2>🎙️ AI Voice Chat</h2>
 
-    <main class="chat-box" id="chat-box"></main>
+  <label style="margin-bottom:10px;">
+    <input type="checkbox" id="ttsFlag"> Ricevi risposta vocale
+  </label>
+  
+  <div id="chat"></div>
 
-    <footer id="input-bar">
-      <input
-        type="text"
-        id="user-input"
-        placeholder="Fai una domanda..."
-        autocomplete="off"
-      />
-      <button id="send-btn" onclick="sendMessage()">Invia</button>
-    </footer>
+  <div id="controls">
+    <input id="message" placeholder="Scrivi un messaggio...">
+    <button id="sendBtn">💬 Invia</button>
+    <button id="recBtn">🎙️ Registra</button>
   </div>
 
-  <script src="static/script.js"></script>
+  <div id="audioControls">
+    <button id="playBtn" disabled>▶️ Riascolta</button>
+    <button id="sendAudioBtn" disabled>📤 Invia audio</button>
+    <button id="downloadBtn" disabled>💾 Scarica audio</button>
+  </div>
+
+  <audio id="previewAudio" controls hidden></audio>
+
+  <script src="/static/script.js"></script>
 </body>
 </html>

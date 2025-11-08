@@ -1,136 +1,311 @@
-// Flag che indica se l'AI sta elaborando una richiesta.
-// Evita che l'utente invii più messaggi mentre la risposta è ancora in corso.
+// Contenitore principale della chat dove verranno inseriti i messaggi
+const chat = document.getElementById('chat');
+// Input di testo dove l'utente scrive i messaggi
+const msgInput = document.getElementById('message');
+// Pulsante per inviare messaggi di testo
+const sendBtn = document.getElementById('sendBtn');
+// Pulsante per avviare/fermare la registrazione audio
+const recBtn = document.getElementById('recBtn');
+// Pulsante per riprodurre l'audio registrato in anteprima
+const playBtn = document.getElementById('playBtn');
+// Pulsante per inviare l'audio registrato al backend
+const sendAudioBtn = document.getElementById('sendAudioBtn');
+// Pulsante per scaricare l'audio registrato
+const downloadBtn = document.getElementById('downloadBtn');
+// Elemento <audio> per l'anteprima dell'audio registrato
+const previewAudio = document.getElementById('previewAudio');
+// Checkbox per indicare se si vuole ricevere la risposta del bot anche in audio (TTS)
+const ttsFlag = document.getElementById('ttsFlag');
+
+// Endpoint per inviare messaggi di testo
+const TEXT_ENDPOINT = '/test';
+// Endpoint per inviare messaggi audio
+const AUDIO_ENDPOINT = '/audio';
+
+// Blob contenente l'audio registrato dall'utente
+let recordedBlob = null;
+// Oggetto MediaRecorder utilizzato per registrare l'audio dal microfono
+let recorder = null;
+// Array che raccoglie i chunk dell'audio durante la registrazione
+let chunks = [];
+// Flag booleano per indicare se il sistema sta elaborando una richiesta
 let isProcessing = false;
 
-
-/**
- * Invia il messaggio dell’utente al backend Flask
- * e gestisce la risposta del modello AI.
- */
-async function sendMessage() {
-  // Se c'è già un messaggio in elaborazione, blocca l'invio
-  if (isProcessing) return;
-
-
-  // Recupera input e pulsante
-  const input = document.getElementById("user-input");
-  const button = document.getElementById("send-btn");
- 
-  // Pulisce input utente e controlla che non sia vuoto
-  const message = input.value.trim();
-  if (!message) return;
-
-
-  // Aggiunge subito il messaggio dell'utente nella chat
-  addMessage("user", message);
-
-
-  // Disabilita input e pulsante durante l'elaborazione
-  input.value = "";
-  input.disabled = true;
-  button.disabled = true;
-  isProcessing = true;
-
-
-  // Mostra messaggio di attesa
-  const thinking = addMessage("bot typing", "Sto pensando...");
-
-
-  try {
-    // Invia una richiesta POST al backend Flask (/test) con il messaggio dell'utente
-    const response = await fetch("/test", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
-    });
-
-
-    // Se la risposta HTTP non è OK (200), genera un errore con il codice HTTP
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-
-    // Converte la risposta JSON ricevuta dal server
-    const data = await response.json();
-
-
-    // Rimuove il messaggio "Sto pensando..." dalla chat
-    removeMessage(thinking);
-   
-    // Se la richiesta ha avuto successo, mostra la risposta dell'AI nella chat
-    if (data.response) addMessage("bot", data.response);
-    // Se il server ha restituito un errore, lo mostra nella chat
-    else if (data.error) addMessage("bot", "-- Errore: " + data.error);
-   
-  }
- 
-  catch (error) {
-    // Se si verifica un errore di rete o altro durante fetch
-    // rimuove il messaggio "Sto pensando..."
-    removeMessage(thinking);
-
-
-    // Mostra un messaggio di errore nella chat
-    addMessage("bot", "- Errore di rete: " + error.message);
-  }
- 
-  finally {
-    // Ripristina lo stato dell'input e del pulsante per permettere nuovi invii
-    input.disabled = false;
-    button.disabled = false;
-    input.focus();
-
-
-    // Non ci sono più messaggi in elaborazione
-    isProcessing = false;
-  }
+// setBusy: abilita o disabilita tutti i controlli della UI
+// durante l'elaborazione di una richiesta per evitare input multipli
+// state = true → blocca pulsanti e input
+// state = false → sblocca pulsanti e input
+function setBusy(state) {
+	isProcessing = state;              // Aggiorna flag globale di stato
+	sendBtn.disabled = state;          // Blocca/abilita invio testo
+	recBtn.disabled = state;           // Blocca/abilita registrazione
+	sendAudioBtn.disabled = state;     // Blocca/abilita invio audio
+	msgInput.disabled = state;         // Blocca/abilita input testo
 }
 
+// appendMessage: aggiunge un messaggio alla chat
+// text = contenuto del messaggio
+// who = 'user' o 'ai' per differenziare lo stile
+// html = true se il testo contiene HTML già formattato
+function appendMessage(text, who = 'ai', html = false) {
+	const div = document.createElement('div');
+	div.className = 'msg ' + (who === 'user' ? 'user' : 'ai'); // Imposta classe per styling
 
-/**
- * Aggiunge un messaggio alla chat.
- * @param {string} s - 'user', 'bot', o 'bot typing'
- * @param {string} text - contenuto del messaggio
- * @returns {HTMLElement} l’elemento messaggio creato
- */
-function addMessage(s, text) {
-  const chatBox = document.getElementById("chat-box");
-  // Crea un nuovo div per il messaggio
-  const msg = document.createElement("div");
-  msg.classList.add("message");
- 
-  // Se il messaggio è di tipo "typing" (sta pensando), aggiunge la classe 'typing'
-  if (s.includes("typing")) msg.classList.add("typing");
-  // Altrimenti aggiunge la classe specifica 'user' o 'bot'
-  else msg.classList.add(s);
+	if (html) div.innerHTML = text;   // Inserisce il contenuto come HTML
+	else div.textContent = text;      // Inserisce il contenuto come testo semplice
 
-
-  // Imposta il testo e aggiunge il messaggio appena creato alla chat
-  msg.innerHTML = text;
-  chatBox.appendChild(msg);
-
-
-  // Scorre verso il basso per mostrare l'ultimo messaggio
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-
-  return msg;
+	chat.appendChild(div);
+	chat.scrollTop = chat.scrollHeight; // Scroll automatico verso il basso
 }
 
+// appendBotAudio: aggiunge un messaggio audio del bot nella chat
+// base64Audio = stringa base64 dell'audio generato dal bot
+// text = trascrizione testuale opzionale da mostrare sopra l'audio
+function appendBotAudio(base64Audio, text = '') {
+	const container = document.createElement('div');
+	container.className = 'msg ai';
 
-/**
- * Rimuove un messaggio (es. il “sta pensando...”)
- * @param {HTMLElement} element - l’elemento da rimuovere
- */
-function removeMessage(element) {
-  // Controlla che l'elemento esista e abbia un genitore nel DOM
-  if (element && element.parentNode) element.parentNode.removeChild(element);
+	// Se presente una trascrizione, la aggiunge sopra l'audio
+	if (text) {
+		const p = document.createElement('p');
+		p.textContent = text;
+		container.appendChild(p);
+	}
+
+	// Decodifica base64 → stringa binaria
+	const bytes = atob(base64Audio);
+	// Crea array di byte
+	const arr = new Uint8Array(bytes.length);
+	for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+
+	// Crea un Blob audio e imposta la sorgente dell'elemento <audio>
+	const audio = document.createElement('audio');
+	audio.controls = true;
+	audio.src = URL.createObjectURL(new Blob([arr], { type: 'audio/wav' }));
+	container.appendChild(audio);
+
+	// Aggiunge il messaggio alla chat e scroll automatico
+	chat.appendChild(container);
+	chat.scrollTop = chat.scrollHeight;
+
+	// Riproduzione automatica appena arriva l'audio
+	audio.play().catch(err => {
+		console.log('Autoplay fallito:', err);
+	});
 }
 
+// playTTS: riproduce un audio generato dal TTS (Text-to-Speech)
+// base64Str = stringa base64 contenente l'audio WAV
+function playTTS(base64Str) {
+	// Decodifica la stringa base64 in una stringa binaria
+	const bytes = atob(base64Str);
+	// Converte la stringa binaria in un array di byte (Uint8Array)
+	const arr = new Uint8Array(bytes.length);
+	for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
 
-// Permette l’invio premendo "Enter"
-document.getElementById("user-input").addEventListener("keydown", (e) => {
-  // Se il tasto premuto è "Enter" e non c'è già un messaggio in elaborazione
-  // Chiama la funzione sendMessage per inviare il messaggio
-  if (e.key === "Enter" && !isProcessing) sendMessage();
+	// Crea un Blob con MIME type audio/wav
+	const blob = new Blob([arr], { type: 'audio/wav' });
+
+	// Crea un oggetto Audio e assegna come sorgente il Blob appena creato
+	const audio = new Audio(URL.createObjectURL(blob));
+
+	// Riproduzione automatica appena arriva l'audio
+	audio.play().catch(err => {
+		console.log('Autoplay TTS fallito:', err);
+	});
+}
+
+// sendTextMessage: invia il testo scritto dall'utente al backend
+// Se il flag TTS è attivo, chiede anche la risposta vocale
+async function sendTextMessage() {
+	const message = msgInput.value.trim();
+	// Se non c'è messaggio o è già in corso un'elaborazione, esce
+	if (!message || isProcessing) return;
+
+	// Mostra il messaggio dell'utente nella chat
+	appendMessage(message, 'user');
+	msgInput.value = '';
+
+	// Disabilita i controlli mentre il messaggio viene elaborato
+	setBusy(true);
+
+	try {
+		// Se il flag TTS è selezionato, aggiunge il parametro alla query
+		const ttsQuery = ttsFlag.checked ? '?tts=1' : '';
+
+		// Invia il messaggio al backend (endpoint /test) via POST
+		const res = await fetch(TEXT_ENDPOINT + ttsQuery, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ message })
+		});
+
+		// Legge la risposta JSON dal server
+		const data = await res.json();
+
+		// Se la risposta contiene audio base64, aggiungi messaggio audio del bot
+		if (data.base64) appendBotAudio(data.base64, data.response || '');
+		// Altrimenti mostra la risposta testuale
+		else appendMessage(data.response || JSON.stringify(data), 'ai', true);
+
+	} catch (err) {
+		// In caso di errore di rete o backend, mostra l'errore nella chat
+		appendMessage('Errore: ' + err.message);
+	} finally {
+		// Riabilita i controlli dopo l'elaborazione
+		setBusy(false);
+	}
+}
+
+// sendAudioMessage: invia l'audio registrato dall'utente al backend
+// Gestisce anche la risposta del bot come testo o audio (TTS)
+async function sendAudioMessage() {
+	// Se non c'è un audio registrato o è già in corso un'elaborazione, esce
+	if (!recordedBlob || isProcessing) return;
+
+	// Disabilita i controlli mentre l'audio viene elaborato
+	setBusy(true);
+
+	try {
+		// Se il flag TTS è selezionato, aggiunge il parametro alla query
+		const ttsQuery = ttsFlag.checked ? '?tts=1' : '';
+
+		// Invia l'audio al backend (endpoint /audio) via POST
+		const res = await fetch(AUDIO_ENDPOINT + ttsQuery, {
+			method: 'POST',
+			body: recordedBlob
+		});
+
+		// Legge la risposta JSON dal server
+		const data = await res.json();
+
+		// Mostra l'audio inviato dall'utente e la trascrizione
+		appendUserAudio(recordedBlob, data.user || 'Trascrizione non disponibile');
+
+		// Mostra la risposta del bot: audio + trascrizione se disponibile
+		if (data.base64) appendBotAudio(data.base64, data.response || '');
+		else appendMessage(data.response || JSON.stringify(data), 'ai', true);
+
+	} catch (err) {
+		// In caso di errore di rete o backend, mostra l'errore nella chat
+		appendMessage('Errore upload: ' + err.message);
+	} finally {
+		// Pulizia dell'anteprima audio
+		previewAudio.src = '';
+		previewAudio.hidden = true;
+
+		// Reset variabili e disabilita pulsanti
+		recordedBlob = null;
+		playBtn.disabled = true;
+		sendAudioBtn.disabled = true;
+		downloadBtn.disabled = true;
+
+		// Ripristina testo del pulsante di registrazione
+		recBtn.textContent = '🎙️ Registra';
+
+		// Riabilita i controlli dopo l'elaborazione
+		setBusy(false);
+	}
+}
+
+// Quando l’utente clicca sul pulsante di registrazione
+recBtn.addEventListener('click', async () => {
+	// Se il registratore è già attivo, interrompe la registrazione
+	if (recorder && recorder.state === 'recording') {
+		recorder.stop();
+		return;
+	}
+
+	try {
+		// Richiede il permesso di accedere al microfono
+		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+		// Inizializza il buffer dei chunk audio
+		chunks = [];
+
+		// Crea un nuovo oggetto MediaRecorder per registrare l’audio del microfono
+		recorder = new MediaRecorder(stream);
+
+		// Ogni volta che riceve un blocco di dati audio, lo aggiunge all’array chunks
+		recorder.ondataavailable = e => chunks.push(e.data);
+
+		// Quando la registrazione termina (onstop)
+		recorder.onstop = () => {
+			// Combina tutti i chunk in un unico Blob audio in formato WebM
+			recordedBlob = new Blob(chunks, { type: 'audio/webm' });
+
+			// Mostra l’anteprima audio nell’interfaccia
+			previewAudio.src = URL.createObjectURL(recordedBlob);
+			previewAudio.hidden = false;
+
+			// Abilita i pulsanti per riprodurre, inviare o scaricare l’audio
+			playBtn.disabled = false;
+			sendAudioBtn.disabled = false;
+			downloadBtn.disabled = false;
+		};
+
+		// Avvia la registrazione
+		recorder.start();
+
+		// Cambia il testo del pulsante per indicare che la registrazione è in corso
+		recBtn.textContent = '⏹️ Stop';
+	} catch (err) {
+		// Se il microfono non è accessibile o l’utente nega il permesso
+		alert('Errore microfono: ' + err.message);
+	}
 });
 
+// Riproduce l’audio registrato in anteprima
+playBtn.addEventListener('click', () => previewAudio.play());
+
+// Invia l’audio registrato al server per la trascrizione e la risposta del bot
+sendAudioBtn.addEventListener('click', sendAudioMessage);
+
+// Consente di scaricare l’audio registrato in locale come file .webm
+downloadBtn.addEventListener('click', () => {
+	// Se non c’è alcuna registrazione, interrompe l’azione
+	if (!recordedBlob) return;
+
+	// Crea dinamicamente un link “invisibile” per forzare il download
+	const a = document.createElement('a');
+	a.href = URL.createObjectURL(recordedBlob); // converte il Blob in un URL temporaneo
+	a.download = 'registrazione.webm';          // nome del file scaricato
+	a.click();                                  // simula il click sul link per scaricare
+});
+
+// appendUserAudio: Mostra nella chat l’audio inviato dall’utente e, sotto di esso,
+// la trascrizione generata da Whisper (se disponibile).
+function appendUserAudio(blob, transcription) {
+	const container = document.createElement('div');
+	container.className = 'msg user';
+
+	// Crea il player audio per riascoltare la registrazione
+	const audio = document.createElement('audio');
+	audio.controls = true;
+	audio.src = URL.createObjectURL(blob);
+	container.appendChild(audio);
+
+	// Aggiunge la trascrizione (se presente)
+	if (transcription) {
+		const p = document.createElement('p');
+		p.textContent = transcription;
+		container.appendChild(p);
+	}
+
+	// Inserisce il messaggio completo nella chat
+	chat.appendChild(container);
+	// Fa scorrere automaticamente la chat verso il basso
+	chat.scrollTop = chat.scrollHeight;
+}
+
+// Click sul pulsante “Invia”
+sendBtn.addEventListener('click', sendTextMessage);
+
+// Pressione del tasto Invio nel campo di testo
+msgInput.addEventListener('keydown', e => {
+	// Previene l’invio multiplo o l’invio accidentale con Shift+Enter
+	if (e.key === 'Enter') {
+		e.preventDefault();
+		sendTextMessage();
+	}
+});

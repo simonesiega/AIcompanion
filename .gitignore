@@ -45,4 +45,5 @@ Thumbs.db
 # Specific folders 
 Scripts/
 Include/
-generated/
+questions/
+responses/

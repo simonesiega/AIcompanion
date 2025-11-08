@@ -54,7 +54,10 @@ class WebConfig:
     Configurazione del servizio web Flask.
     """
     STATIC_FOLDER: str = "static"  # Cartella per file frontend (HTML, CSS, JS)
-    APP_ROUTE_TEST: str = "/test"  # Endpoint API principale
+
+    APP_ROUTE_TEST: str = "/test"  # Endpoint API testo
+    APP_ROUTE_AUDIO: str = "/audio"  # Endpoint API audio
+
     HOST: str = "127.0.0.1"  # Host locale
     PORT: int = 9000  # Porta di esecuzione dell'app Flask
     DEBUG: bool = False
@@ -76,7 +79,7 @@ class KokoroConfig:
     TEST_MODEL_PATH: str = "../models/kokoro-v1_0.pth"
     TEST_CONFIG_PATH: str = "../models/config.json"
     TEST_VOICES_PATH: str = "../models/voices/"
-    TEST_VOICE_PATH: str = "../models/voices/af_jessica.pt"
+    TEST_VOICE_PATH: str = "../models/voices/im_nicola.pt"
     TEST_GENERATED_PATH: str = "../generated/"
 
     # Percorsi dei modelli e configurazioni 
@@ -84,7 +87,7 @@ class KokoroConfig:
     CONFIG_PATH: str = "models/config.json"
     VOICES_PATH: str = "models/voices/"
     VOICE_PATH: str = "models/voices/af_jessica.pt"
-    GENERATED_PATH: str = "generated/"
+    GENERATED_PATH: str = "responses/"
     
     # Parametri audio
     AUDIO_SPEED: float = 0.9  # Velocità di riproduzione della voce sintetizzata

@@ -2,32 +2,50 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Companion</title>
   <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-  <h2>🎙️ AI Voice Chat</h2>
+  <div class="app">
 
-  <label style="margin-bottom:10px;">
-    <input type="checkbox" id="ttsFlag"> Ricevi risposta vocale
-  </label>
-  
-  <div id="chat"></div>
+    <!-- HEADER -->
+    <header class="header">
+      <h1>AI Companion</h1>
+    </header>
 
-  <div id="controls">
-    <input id="message" placeholder="Scrivi un messaggio...">
-    <button id="sendBtn">💬 Invia</button>
-    <button id="recBtn">🎙️ Registra</button>
+    <!-- AREA CHAT -->
+    <main id="chat" class="chat"></main>
+
+    <!-- AREA INPUT -->
+    <section class="input-area">
+
+      <!-- Barra messaggi -->
+      <div class="input-bar">
+        <button id="recBtn">🎙️</button>
+        <input id="message" type="text" placeholder="Scrivi un messaggio..." autocomplete="off">
+        <button id="sendBtn">📩</button>
+      </div>
+
+      <!-- Controlli audio -->
+      <div class="audio-controls">
+        <audio id="previewAudio" hidden controls></audio>
+        <button id="playBtn" disabled>▶️ Riproduci</button>
+        <button id="sendAudioBtn" disabled>📤 Invia audio</button>
+        <button id="downloadBtn" disabled>💾 Scarica</button>
+      </div>
+
+      <!-- Opzione TTS -->
+      <div class="tts-option">
+        <label>
+          <input type="checkbox" id="ttsFlag">
+          Ricevi anche la risposta in audio
+        </label>
+      </div>
+
+    </section>
   </div>
 
-  <div id="audioControls">
-    <button id="playBtn" disabled>▶️ Riascolta</button>
-    <button id="sendAudioBtn" disabled>📤 Invia audio</button>
-    <button id="downloadBtn" disabled>💾 Scarica audio</button>
-  </div>
-
-  <audio id="previewAudio" controls hidden></audio>
-
-  <script src="/static/script.js"></script>
+  <script src="static/main.js"></script>
 </body>
 </html>

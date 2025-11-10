@@ -55,8 +55,15 @@ class WebConfig:
     """
     STATIC_FOLDER: str = "static"  # Cartella per file frontend (HTML, CSS, JS)
 
+    STATIC_FOLDER_TEST: str = "static2"  # Cartella2 per file frontend (HTML, CSS, JS)
+
+    # Endpoint API per AICompanion
     APP_ROUTE_TEST: str = "/test"  # Endpoint API testo
     APP_ROUTE_AUDIO: str = "/audio"  # Endpoint API audio
+
+    # Endpoint API per la modalità interrogazione
+    APP_ROUTE_INTERROGAZIONE_START: str = "/test_interrogazione/start"
+    APP_ROUTE_INTERROGAZIONE_ANSWER: str = "/test_interrogazione/answer"
 
     HOST: str = "127.0.0.1"  # Host locale
     PORT: int = 9000  # Porta di esecuzione dell'app Flask
@@ -107,3 +114,13 @@ class WhisperConfig:
     # Parametri
     DEVICE_NAME: str = "cpu"  # Dispositivo su cui eseguire il modello: "cpu" o "cuda"
     LANGUAGE: str = "it"  # Lingua di trascrizione
+
+class TestChatConfig:
+    """
+    Configurazione per la modalità 'interrogazione' (AICompanion Test Mode).
+    """
+    MODEL_NAME = "gemma3:4b"
+    INTERROGAZIONE_DIR = "./interrogazione"
+    CONTESTO_PATH = f"{INTERROGAZIONE_DIR}/contesto.json"
+    DOMANDE_PATH = f"{INTERROGAZIONE_DIR}/domande.json"
+    

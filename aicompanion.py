@@ -273,7 +273,7 @@ class AICompanion:
         return result.get('text') if isinstance(result, dict) else str(result)
 
     # ROUTES Flask
-    def register_routes(self):
+    def _register_routes(self):
         """
         Registra tutte le route HTTP dell'applicazione Flask.
 

@@ -26,6 +26,9 @@ from core.config import (
 # Formattazione per HTML e TTS
 from core.utils import format_for_html, format_for_tts
 
+# Embedding e creazione .db vettoriali
+from core.vector_utils import load_DB, get_relevant_chunks
+
 # Libreria PyTorch
 import torch
 
@@ -77,15 +80,13 @@ class AICompanion:
         # Generatore di embeddings basato su Ollama
         self.embeddings = OllamaEmbeddings(model=EmbeddingConfig.NAME)
 
-        # Carica il Vector Store (database vettoriale) in memoria
-        # Contiene i vettori precomputati usati per la ricerca semantica (RAG)
-        self.vector_store = InMemoryVectorStore.load(
-            "./vs/alice.db", # Percorso al database vettoriale
-            embedding=self.embeddings # Modello di embedding da usare
-        )
+        # Carica e unisce tutti i database vettoriali presenti in ./vs
+        # Ogni .db contiene embedding di documenti diversi utilizzati per la ricerca semantica (RAG)
+        self.vs = load_DB()
 
-        # Crea un retriever per recuperare documenti rilevanti dal Vector Store
-        self.retriever = self.vector_store.as_retriever()
+        # Crea un retriever dal Vector Store per effettuare ricerche semantiche (RAG)
+        # Il retriever permette di recuperare i documenti più rilevanti rispetto a una domanda utente.
+        self.retriever = self.vs.as_retriever()
 
         # SEZIONE CRONOLOGIA CHAT
         # Mantiene lo storico delle conversazioni (prompt e risposte)

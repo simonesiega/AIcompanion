@@ -5,6 +5,9 @@ Modulo di configurazione centrale.
 Definisce costanti e parametri utilizzati da tutto il sistema.
 """
 
+import os
+import glob
+
 class ModelConfig:
     """
     Configurazione del modello linguistico utilizzato da Ollama.
@@ -119,8 +122,15 @@ class TestChatConfig:
     """
     Configurazione per la modalità 'interrogazione' (AICompanion Test Mode).
     """
-    MODEL_NAME = "gemma3:4b"
-    INTERROGAZIONE_DIR = "./interrogazione"
-    CONTESTO_PATH = f"{INTERROGAZIONE_DIR}/contesto.json"
-    DOMANDE_PATH = f"{INTERROGAZIONE_DIR}/domande.json"
+    MODEL_NAME: str = "gemma3:4b"
+    INTERROGATION_DIR: str = "./interrogazione"
+    CONTEXT_PATH: str = f"{INTERROGATION_DIR}/contesto.json"
+    QUESTIONS_PATH: str = f"{INTERROGATION_DIR}/domande.json"
+    N_QUESTIONS: int = 10
+
+    @classmethod
+    def get_db_paths(cls):
+        """Restituisce la lista di tutti i DB presenti nella cartella ../vs"""
+        dbs = glob.glob(os.path.join("vs", "*.db"))
+        return dbs
     

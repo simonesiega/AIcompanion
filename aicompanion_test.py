@@ -22,6 +22,9 @@ from core.config import (
     TestChatConfig   # Parametri interrogazione 
 )
 
+# Creazione delle domande per l interrogazione
+from core.question_generator import create_interrogation
+
 def load_interrogazione():
     """
     Carica il contesto e le domande per la modalità 'interrogazione'
@@ -32,17 +35,17 @@ def load_interrogazione():
     """
 
     # Verifica se i file JSON esistono, altrimenti solleva eccezione
-    if not os.path.exists(TestChatConfig.CONTESTO_PATH) or not os.path.exists(TestChatConfig.DOMANDE_PATH):
+    if not os.path.exists(TestChatConfig.CONTEXT_PATH) or not os.path.exists(TestChatConfig.QUESTIONS_PATH):
         raise FileNotFoundError(
             "File contesto.json o domande.json mancanti nella cartella 'interrogazione/'"
         )
 
     # Carica il file contesto.json
-    with open(TestChatConfig.CONTESTO_PATH, "r", encoding="utf-8") as f:
+    with open(TestChatConfig.CONTEXT_PATH, "r", encoding="utf-8") as f:
         contesto = json.load(f)
 
     # Carica il file domande.json
-    with open(TestChatConfig.DOMANDE_PATH, "r", encoding="utf-8") as f:
+    with open(TestChatConfig.QUESTIONS_PATH, "r", encoding="utf-8") as f:
         domande = json.load(f)
 
     # Restituisce entrambi i dizionari
@@ -120,6 +123,13 @@ class AICompanionTest:
 
         # Contesto iniziale di sistema per le valutazioni
         self.context = [("system", "Sei un professore che valuta risposte in modo oggettivo e chiaro.")]
+
+        # Genera le domande per l interrogazione
+        try:
+            db_paths = TestChatConfig.get_db_paths()
+            create_interrogation(db_paths)
+        except Exception as e:
+            print(f"ERRORE durante la generazione delle domande: {e}")
 
         # Carica contesto e domande
         self.contesto, self.domande_data = load_interrogazione()

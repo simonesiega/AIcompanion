@@ -42,11 +42,10 @@ Consente dialoghi naturali e sfrutta i modelli TTS/ASR integrati.
 
 ## Struttura del progetto
 
-Per la mappa completa delle cartelle, inclusi file e cartelle **non presenti su GitHub**, consultare il file **[struttura.md](./struttura.md)**.  
+Per la mappa completa delle cartelle, inclusi file e cartelle **non presenti su GitHub**, consultare il file **[struttura.md](./docs/struttura.md)**.  
 
 La root del progetto è `AIcompanion/`.
 
----
 
 ## Installazione
 
@@ -61,7 +60,7 @@ git clone https://github.com/simonesiega/AIcompanion.git
 pip install -r requirements.txt
 ```
 
-3. Assicurati di aver creato correttamente le cartelle e inserito i modelli, come indicato in **[struttura.md](./docs/struttura.md)**.  
+### 3. Assicurati di aver creato correttamente le cartelle e inserito i modelli, come indicato in **[struttura.md](./docs/struttura.md)**.  
    Per i comandi principali di ambiente e avvio, consulta **[comandi.md](./docs/comandi.md)**.
 
 ## Avvio

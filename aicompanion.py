@@ -119,7 +119,7 @@ class AICompanion:
 
         # SEZIONE ROUTE FLASK
         # Registra tutte le route API (es. /test, /audio, /static ecc.)
-        self.register_routes()
+        self._register_routes()
 
     def create_context(self, user_message: str, retrieved_documents: str):
         """

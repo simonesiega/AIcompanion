@@ -8,6 +8,10 @@ from langchain_community.vectorstores import InMemoryVectorStore
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
+from core.config import (
+    EmbeddingConfig,
+)
+
 
 def choose_splitter(text_length: int, custom_size: int | None = None, custom_overlap: int | None = None) -> RecursiveCharacterTextSplitter:
     """
@@ -102,7 +106,7 @@ def load_pdfs(data_dir: str = "./vs/data") -> list:
     return chunks
 
 
-def create_vectorstore(chunks: list, db_path: str = "./vs/data.db", embedding_model: str = "qwen3-embedding:8b") -> InMemoryVectorStore:
+def create_vectorstore(chunks: list, db_path: str = "./vs/data.db", embedding_model: str = EmbeddingConfig.NAME) -> InMemoryVectorStore:
     """
     Crea e salva un VectorStore locale a partire da una lista di chunk testuali.
 
@@ -136,8 +140,6 @@ def create_vectorstore(chunks: list, db_path: str = "./vs/data.db", embedding_mo
     return vs
 
 
-
-
 def load_DB(data_dir="./vs"):
     """
     Carica tutti i database vettoriali (.db) presenti nella cartella /vs
@@ -149,7 +151,7 @@ def load_DB(data_dir="./vs"):
     Restituisce:
         InMemoryVectorStore: Unione di tutti i VectorStore caricati
     """
-    embeddings = OllamaEmbeddings(model="qwen3-embedding:8b")
+    embeddings = OllamaEmbeddings(model=EmbeddingConfig.NAME)
     stores = []
 
     for file in os.listdir(data_dir):
@@ -171,8 +173,7 @@ def load_DB(data_dir="./vs"):
     return combined
 
 
-
-def get_relevant_chunks(question: str, vs: InMemoryVectorStore, embedding_model: str = "qwen3-embedding:8b",top_k: int = 5) -> list[str]:
+def get_relevant_chunks(question: str, vs: InMemoryVectorStore, embedding_model: str = EmbeddingConfig.NAME,top_k: int = 5) -> list[str]:
     """
     Restituisce i chunk più rilevanti rispetto a una domanda fornita dall'utente.
 

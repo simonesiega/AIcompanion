@@ -142,7 +142,7 @@ def create_interrogation(db_paths: list, n_questions: int = TestChatConfig.N_QUE
                 l.strip() for l in response.split("\n")
                 if len(l.strip()) > 5
             ]
-    # print(f"Domande generate: {len(questions)}")
+    print(f"Domande generate: {len(questions)}")
 
     # Salvataggio domande
     os.makedirs(TestChatConfig.INTERROGATION_DIR, exist_ok=True)
@@ -156,4 +156,4 @@ if __name__ == "__main__":
     Usa il DB di Alice nel Paese delle Meraviglie
     """
     db_test = ["../vs/alice.db"]
-    create_interrogation(db_test, n_questions=5)
+    create_interrogation(db_test)

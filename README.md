@@ -61,7 +61,8 @@ git clone https://github.com/simonesiega/AIcompanion.git
 pip install -r requirements.txt
 ```
 
-3. Assicurati di avere le cartelle e i modelli non versionati come indicato in **[struttura.md](./struttura.md)**.
+3. Assicurati di avere le cartelle e i modelli non versionati come indicato in **[struttura.md](./struttura.md)**.  
+   Per i comandi principali di ambiente e avvio, vedi **[comandi.md](./comandi.md)**.
 
 ## Avvio
 

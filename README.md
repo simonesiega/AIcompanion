@@ -27,7 +27,18 @@ AIcompanion è un assistente AI modulare basato su Python e Flask, progettato pe
    - Pipeline per trascrizione vocale ASR
    - Facile estensione con nuovi modelli o moduli
 
----
+## Screenshot
+
+### aicompanion - Chat Bot interattiva:
+- Interfaccia principale utilizzata per la comunicazione con l’assistente AI, tramite messaggi testuali o audio.  
+Consente dialoghi naturali e sfrutta i modelli TTS/ASR integrati.
+  
+![Chat Bot interattiva](screen/chat.png)
+
+### aicompanion_test - Chat Bot interrogazione:
+- Schermata dedicata alle sessioni di test: lo studente risponde alle domande, e il sistema valuta automaticamente correttezza e spiegazione.
+  
+![Chat Bot interrogazione](screen/test.png)
 
 ## Struttura del progetto
 

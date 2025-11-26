@@ -201,7 +201,7 @@ async function sendAudioMessage() {
 		downloadBtn.disabled = true;
 
 		// Ripristina testo del pulsante di registrazione
-		recBtn.textContent = '🎙️ Registra';
+		recBtn.textContent = '🎙️';
 
 		// Riabilita i controlli dopo l'elaborazione
 		setBusy(false);
@@ -248,7 +248,7 @@ recBtn.addEventListener('click', async () => {
 		recorder.start();
 
 		// Cambia il testo del pulsante per indicare che la registrazione è in corso
-		recBtn.textContent = '⏹️ Stop';
+		recBtn.textContent = '⏹️';
 	} catch (err) {
 		// Se il microfono non è accessibile o l’utente nega il permesso
 		alert('Errore microfono: ' + err.message);

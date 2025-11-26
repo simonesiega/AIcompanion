@@ -61,8 +61,8 @@ git clone https://github.com/simonesiega/AIcompanion.git
 pip install -r requirements.txt
 ```
 
-3. Assicurati di avere le cartelle e i modelli non versionati come indicato in **[struttura.md](./struttura.md)**.  
-   Per i comandi principali di ambiente e avvio, vedi **[comandi.md](./comandi.md)**.
+3. Assicurati di aver creato correttamente le cartelle e inserito i modelli, come indicato in **[struttura.md](./docs/struttura.md)**.  
+   Per i comandi principali di ambiente e avvio, consulta **[comandi.md](./docs/comandi.md)**.
 
 ## Avvio
 
@@ -71,7 +71,7 @@ pip install -r requirements.txt
 ```
 python aicompanion.py
 ```
-   - Accedi all’interfaccia web
+   - Interfaccia web principale
    - Invio messaggi testuali → endpoint **/test**
    - Invio messaggi audio → endpoint **/audio**
 
@@ -81,6 +81,6 @@ python aicompanion.py
 ```
 python aicompanion_test.py
 ```
-   - Accedi all’interfaccia web dedicata alla modalità test
+   - Interfaccia web dedicata al test
    - Avvio interrogazione → endpoint **/start**
    - Risposta a domande → endpoint **/answer**

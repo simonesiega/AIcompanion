@@ -6,7 +6,7 @@ Questo documento fornisce una **mappa delle cartelle non presenti su GitHub** al
 La root del progetto è:
 
 ```
-AIcompanion\
+AIcompanion/
 ```
 
 Ogni sezione descrive:

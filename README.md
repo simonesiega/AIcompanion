@@ -29,23 +29,29 @@ AIcompanion è un assistente AI modulare basato su Python e Flask, progettato pe
 
 ## Screenshot
 
-### aicompanion - Chat Bot interattiva:
+### [aicompanion.py](./aicompanion.py) - Chat Bot interattiva:
 - Interfaccia principale utilizzata per la comunicazione con l’assistente AI, tramite messaggi testuali o audio.  
 Consente dialoghi naturali e sfrutta i modelli TTS/ASR integrati.
   
 ![Chat Bot interattiva](screen/chat.png)
 
-### aicompanion_test - Chat Bot interrogazione:
+### [aicompanion_test.py](./aicompanion_test.py) - Chat Bot interrogazione:
 - Schermata dedicata alle sessioni di test: lo studente risponde alle domande, e il sistema valuta automaticamente correttezza e spiegazione.
   
 ![Chat Bot interrogazione](screen/test.png)
 
 ## Struttura del progetto
 
-Per la mappa completa delle cartelle, inclusi file e cartelle **non presenti su GitHub**, consultare il file **[struttura.md](./docs/struttura.md)**.  
+- Mappa completa delle cartelle (incluse quelle non presenti su GitHub):  
+  **[struttura.md](./docs/struttura.md)**  
+- Documentazione completa della configurazione (modelli, server, TTS, ASR, interrogazione):  
+  **[config.md](./docs/config.md)**
 
-La root del progetto è `AIcompanion/`.
+La root del progetto è:
 
+```
+AIcompanion/
+```
 
 ## Installazione
 
@@ -60,8 +66,14 @@ git clone https://github.com/simonesiega/AIcompanion.git
 pip install -r requirements.txt
 ```
 
-### 3. Assicurati di aver creato correttamente le cartelle e inserito i modelli, come indicato in **[struttura.md](./docs/struttura.md)**.  
-   Per i comandi principali di ambiente e avvio, consulta **[comandi.md](./docs/comandi.md)**.
+### 3. Struttura del progetto e modelli richiesti
+
+La struttura completa delle cartelle (incluse quelle **non versionate**) e l’elenco dei modelli necessari sono descritti in:
+
+- **[struttura.md](./docs/struttura.md)** → contiene cartelle, file e modelli da aggiungere manualmente  
+- **[comandi.md](./docs/comandi.md)** → comandi utili per avvio, ambiente e debug
+
+Assicurati di seguire le istruzioni riportate in questi due file prima di avviare l’applicazione.
 
 ## Avvio
 

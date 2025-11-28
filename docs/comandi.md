@@ -9,7 +9,7 @@ Questa pagina raccoglie i comandi principali per configurare l’ambiente di svi
 Creare un ambiente virtuale dedicato al progetto:
 
 ```
-conda create -n aicompanion python=3.11
+conda create -n aicompanion python=3.13
 ```
 
 Attivarlo:

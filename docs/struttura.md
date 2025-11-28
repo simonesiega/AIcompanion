@@ -2,7 +2,7 @@
 
 ## Introduzione
 
-Questo documento fornisce una **mappa delle cartelle non presenti su GitHub** all'interno del progetto AI Companion.  
+Questa pagina fornisce una **mappa delle cartelle non presenti su GitHub** all'interno del progetto AI Companion.  
 La root del progetto è:
 
 ```
@@ -17,7 +17,7 @@ Ogni sezione descrive:
 
 ## 1. Kokoro
 
-**Percorso:** `AIcompanion\kokoro`
+**Percorso:** `AIcompanion/kokoro`
 
 **Scopo:** Contiene i moduli principali del progetto AI Kokoro e lo script eseguibile.
 
@@ -35,7 +35,7 @@ Ogni sezione descrive:
 
 ## 2. Models
 
-**Percorso:** `AIcompanion\models`
+**Percorso:** `AIcompanion/models`
 
 **Scopo:** Contiene i modelli pre-addestrati e relativi file di configurazione per il progetto.  
 Include anche sottocartelle come `voices` che raggruppano modelli vocali specifici.

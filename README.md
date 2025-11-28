@@ -29,9 +29,15 @@ AIcompanion è un assistente AI modulare basato su Python e Flask, progettato pe
 
 ## Screenshot
 
-Per una panoramica completa delle schermate dell’applicazione, consulta:
+Per vedere l’interfaccia dell’applicazione in esecuzione, è disponibile una raccolta completa di schermate che mostra:
 
-**[Tutti gli screenshot](./docs/screenshots.md)**
+- la chat testuale con il modello
+- la gestione dei messaggi vocali
+- la modalità di interrogazione e i risultati delle valutazioni
+- le impostazioni e i flussi principali dell'app
+
+Puoi consultare gli screenshots qui:
+**[Screenshots dell'applicazione](./docs/screenshots.md)**
 
 ## Struttura del progetto
 

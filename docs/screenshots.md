@@ -1,33 +1,33 @@
 # Screenshot – AIcompanion
 
-Questa pagina raccoglie e descrive tutte le schermate principali dell’interfaccia utente di **AIcompanion**, incluse la modalità Chat e la modalità Interrogazione.  
-Le immagini sono state catturate dall’interfaccia web realizzata in Flask e ottimizzata per desktop.
+Questa pagina raccoglie e descrive tutte le principali schermate dell’interfaccia utente di **AIcompanion**, incluse la modalità **Chat** e la modalità **Interrogazione**.  
+Le immagini provengono dall’interfaccia web basata su Flask, ottimizzata per l’utilizzo da desktop.
 
-### aicompanion.py - Chat Bot interattiva:
+### aicompanion.py - Interfaccia Chat:
 File: **[aicompanion.py](../aicompanion.py)**
 
-Interfaccia principale usata per dialogare con l’assistente AI tramite messaggi **testuali** o **audio**.
+Questa è l’interfaccia principale per interagire con l’assistente AI, tramite messaggi **testuali** o **vocali**.
 
 Funzionalità:
 - Area chat
-- Input text e pulsante audio
-- Gestione TTS (risposte vocali)
-- Integrazione ASR (Whisper) per input vocali
-- Stile semplice e leggibile
+- Input testuale
+- Pulsante microfono per registrare audio
+- Risposte vocali tramite **TTS (Kokoro)**
+- Integrazione **ASR (Whisper)**
 
-![Chat Bot interattiva](../screen/chat.png)
+![Screenshot Chat interattiva](../screen/chat.png)
 
 
-### aicompanion_test.py- Chat Bot interrogazione:
+### aicompanion_test.py - Modalità Interrogazione:
 File: **[aicompanion_test.py](../aicompanion_test.py)**
 
-Interfaccia dedicata alla generazione e valutazione automatica delle risposte.
+Interfaccia dedicata all’interrogazione automatizzata: il sistema genera domande, l’utente risponde e l’AI valuta il risultato.
 
 Funzionalità:
 - Domanda corrente generata dal sistema
-- Campo risposta studente
-- Valutazione automatica (✔ CORRETTA / ✘ SBAGLIATA)
+- Campo per l’inserimento della risposta dello studente
+- Valutazione automatica (CORRETTA / SBAGLIATA)
 - Spiegazione dettagliata fornita dal modello
-- Gestione sessione + riepilogo finale
+- Gestione sessione + riepilogo finale con punteggio
 
-![Chat Bot interrogazione](../screen/test.png)
+![ Screenshot Chat interrogazione](../screen/test.png)

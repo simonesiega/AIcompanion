@@ -35,7 +35,7 @@ conda remove -n aicompanion --all
 Spostarsi nella cartella del progetto:
 
 ```
-cd Desktop/AIcompanion
+cd percorso/AIcompanion   -  cd Desktop/AIcompanion 
 ```
 
 Installare tutte le dipendenze:

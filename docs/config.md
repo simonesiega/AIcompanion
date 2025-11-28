@@ -1,7 +1,6 @@
 # Configurazione del sistema (`core/config.py`)
 
-Il file `core/config.py` contiene tutte le impostazioni principali utilizzate da AIcompanion.  
-Ogni sezione è organizzata in classi.
+Il file **[core/config.py](../core/config.py)** contiene tutte le impostazioni principali utilizzate da AIcompanion. Ogni sezione è organizzata in classi.
 
 Questi parametri influenzano il comportamento dei modelli linguistici, dei sistemi audio, del server Flask e della modalità interrogazione.
 

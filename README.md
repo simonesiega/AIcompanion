@@ -53,6 +53,20 @@ La root del progetto è:
 AIcompanion/
 ```
 
+## Prerequisiti
+
+- **Python 3.13** (versione consigliata per questo progetto)  
+AIcompanion offre **piena compatibilità con tutte le librerie presenti nel progetto** solo utilizzando Python 3.13.  Versioni precedenti (< 3.13) non sono supportate: in particolare la libreria **audioop-lts**, necessaria per l’elaborazione audio, *non funziona* su versioni precedenti di Python.
+- **ffmpeg** installato nel sistema (necessario per Whisper e Pydub)  
+- Alcune librerie come *phonemizer* richiedono anche **espeak** o **espeak-ng**
+
+### Nota su PyTorch
+Nel file [requirements.txt ](./requirements.txt)sono presenti le dipendenze Torch commentate. Al momento PyTorch non distribuisce ancora una build stabile per **Python 3.13 + CUDA**.  
+Quando sarà disponibile basterà decommentare:
+- torch
+- torchvision
+- torchaudio
+
 ## Installazione
 
 ### 1. Clona la repo:

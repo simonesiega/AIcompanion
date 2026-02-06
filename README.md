@@ -1,110 +1,108 @@
-# AIcompanion
+<h1 align="center">AIcompanion</h1>
 
-AIcompanion è un assistente AI modulare basato su Python e Flask, progettato per fornire interazioni conversazionali testuali e vocali, con funzionalità di valutazione automatica delle risposte e integrazione di modelli linguistici.
+<p align="center">
+  <a href="https://github.com/simonesiega/AIcompanion/commits/main">
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/simonesiega/AIcompanion" />
+  </a>
+  <a href="https://github.com/simonesiega/AIcompanion/issues">
+    <img alt="Issues" src="https://img.shields.io/github/issues/simonesiega/AIcompanion" />
+  </a>
+  <a href="https://github.com/simonesiega/AIcompanion/stargazers">
+    <img alt="Stars" src="https://img.shields.io/github/stars/simonesiega/AIcompanion" />
+  </a>
+  <a href="https://github.com/simonesiega/AIcompanion/network/members">
+    <img alt="Forks" src="https://img.shields.io/github/forks/simonesiega/AIcompanion" />
+  </a>
+  <a href="https://github.com/simonesiega/AIcompanion/blob/main/LICENSE">
+    <img alt="License" src="https://img.shields.io/github/license/simonesiega/AIcompanion" />
+  </a>
+</p>
 
----
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3.13-3776AB" />
+  <img alt="Flask" src="https://img.shields.io/badge/Web-Flask-000000" />
+  <img alt="Ollama" src="https://img.shields.io/badge/LLM-Ollama-111111" />
+  <img alt="RAG" src="https://img.shields.io/badge/RAG-Vector%20Store-6A5ACD" />
+  <img alt="Whisper" src="https://img.shields.io/badge/ASR-Whisper-2E8B57" />
+  <img alt="Kokoro" src="https://img.shields.io/badge/TTS-Kokoro-8A2BE2" />
+</p>
+
+<p align="center">
+  Assistente AI modulare (Python + Flask) con chat testuale e vocale, modalità di “interrogazione” con valutazione automatica, e ricerca semantica RAG.
+</p>
+
+<p align="center">
+    <img src="" width="700" alt="Presentation" />
+</p>
+<p align="center">
+   AIcompanion nasce per unire conversazione naturale (testo/voce) e strumenti didattici (interrogazioni e feedback) in un’unica app locale e modulare.  
+   L’obiettivo è avere un “compagno” che non solo risponde, ma può anche contestualizzare (RAG) e valutare.
+</p>
 
 ## Funzionalità principali
 
-1. **Chat testuale e vocale**
-   - Riceve messaggi testuali o audio dall'utente
-   - Utilizza **ChatOllama** per generare risposte coerenti
-   - Supporto Text-to-Speech con **Kokoro**
-   - Supporto Speech-to-Text con **Whisper**
-   - Salvataggio di domande e risposte su disco (`questions/` e `responses/`)
+- Chat testuale e vocale: input testo/audio, risposta LLM, salvataggio su disco (`questions/` e `responses/`).
+- Pipeline voce end-to-end: Speech-to-Text con Whisper, Text-to-Speech con Kokoro.
+- Modalità “interrogazione”: sessioni di test, valutazione automatica (CORRETTA/SBAGLIATA) con spiegazioni e riepilogo finale.
+- Ricerca semantica (RAG): recupero documenti pertinenti tramite vector store + embeddings (OllamaEmbeddings).
+- Modularità: componenti separati (ASR/TTS/RAG/valutazione) per estendere facilmente modelli e flussi.
 
-2. **Modalità "interrogazione"**
-   - Valuta automaticamente le risposte dello studente
-   - Genera un feedback con valutazione **CORRETTA/SBAGLIATA** e spiegazioni
-   - Gestione sessioni e riepilogo finale dei risultati
+## Scalabilitá
 
-3. **Ricerca semantica RAG**
-   - Integrazione con **Vector Store** e embeddings tramite **OllamaEmbeddings**
-   - Recupero dei documenti più pertinenti per contestualizzare le risposte
+AIcompanion è progettato come piattaforma modulare dove:
+- L’esperienza utente può alternare chat libera e sessioni strutturate di test.
+- I modelli possono essere sostituiti/aggiornati senza riscrivere l’intera app (LLM, embeddings, ASR, TTS).
+- Le risposte possono essere arricchite con conoscenza esterna tramite RAG per aumentare coerenza e utilità.
 
-4. **Modularità**
-   - Pipeline audio separata per TTS
-   - Pipeline per trascrizione vocale ASR
-   - Facile estensione con nuovi modelli o moduli
+## Architettura & Tech Overview
 
-## Screenshot
+| Area | Technology | Goal |
+|---|---|---|
+| App | Python + Flask | Web app semplice, estendibile, con endpoint per testo e audio |
+| LLM | ChatOllama | Risposte conversazionali locali |
+| ASR | Whisper (+ ffmpeg) | Trascrizione audio → testo |
+| TTS | Kokoro | Sintesi vocale testo → audio |
+| RAG | Vector Store + OllamaEmbeddings | Recupero contesto semantico per risposte più pertinenti |
+| Storage | File system (`questions/`, `responses/`) | Persistenza semplice di domande/risposte |
 
-Per vedere l’interfaccia dell’applicazione in esecuzione, è disponibile una raccolta completa di schermate che mostra:
+## Screenshots & docs
+<p align="center">
+  <a href="screen/">
+    <img 
+      width="360"
+      height="360"
+      src="screen/chat.png" width="345" alt="Home page black theme" />
+  </a>
+  <a href="screen/">
+    <img 
+      width="360"
+      height="360"
+      src="screen/test.png" width="345" alt="Login white theme" />
+  </a>
+</p>
 
-- la chat testuale con il modello
-- la gestione dei messaggi vocali
-- la modalità di interrogazione e i risultati delle valutazioni
-- le impostazioni e i flussi principali dell'app
+## Contributing & support 🤝
 
-Puoi consultare gli screenshots qui:
-**[Screenshots dell'applicazione](./docs/screenshots.md)**
+I contributi sono benvenuti.
 
-## Struttura del progetto
+- Per bug e feature request, apri una Issue
+- Per contributi al codice, apri una **Pull Request** con una descrizione chiara della modifica e della motivazione
+- Per contatti diretti, scrivimi a simonesiega1@gmail.com o contattami su GitHub
 
-- Mappa completa delle cartelle (incluse quelle non presenti su GitHub):  
-  **[struttura.md](./docs/struttura.md)**  
-- Documentazione completa della configurazione (modelli, server, TTS, ASR, interrogazione):  
-  **[config.md](./docs/config.md)**
+## License
 
-La root del progetto è:
+Questo progetto è distribuito sotto i termini della licenza MIT, come indicato nel file LICENSE.
 
-```
-AIcompanion/
-```
+## Contributors 🧑‍💻
 
-## Prerequisiti
-
-- **Python 3.13** (versione consigliata per questo progetto)  
-AIcompanion offre **piena compatibilità con tutte le librerie presenti nel progetto** solo utilizzando Python 3.13.  Versioni precedenti (< 3.13) non sono supportate: in particolare la libreria **audioop-lts**, necessaria per l’elaborazione audio, *non funziona* su versioni precedenti di Python.
-- **ffmpeg** installato nel sistema (necessario per Whisper e Pydub)  
-- Alcune librerie come *phonemizer* richiedono anche **espeak** o **espeak-ng**
-
-### Nota su PyTorch
-Nel file [requirements.txt ](./requirements.txt)sono presenti le dipendenze Torch commentate. Al momento PyTorch non distribuisce ancora una build stabile per **Python 3.13 + CUDA**.  
-Quando sarà disponibile basterà decommentare:
-- torch
-- torchvision
-- torchaudio
-
-## Installazione
-
-### 1. Clona la repo:
-
-```
-git clone https://github.com/simonesiega/AIcompanion.git
-```
-
-### 2. Installa le dipendenze:
-```
-pip install -r requirements.txt
-```
-
-### 3. Struttura del progetto e modelli richiesti
-
-La struttura completa delle cartelle (incluse quelle **non versionate**) e l’elenco dei modelli necessari sono descritti in:
-
-- **[struttura.md](./docs/struttura.md)** → contiene cartelle, file e modelli da aggiungere manualmente  
-- **[comandi.md](./docs/comandi.md)** → comandi utili per avvio, ambiente e debug
-
-Assicurati di seguire le istruzioni riportate in questi due file prima di avviare l’applicazione.
-
-## Avvio
-
-### 1. Modalità Chat AI
-
-```
-python aicompanion.py
-```
-   - Interfaccia web principale
-   - Invio messaggi testuali → endpoint **/test**
-   - Invio messaggi audio → endpoint **/audio**
-
-
-### 2. Modalità Interrogazione
-
-```
-python aicompanion_test.py
-```
-   - Interfaccia web dedicata al test
-   - Avvio interrogazione → endpoint **/start**
-   - Risposta a domande → endpoint **/answer**
+<p align="center">
+<a href="https://github.com/simonesiega">
+<img
+src="https://github.com/simonesiega.png?size=160"
+width="80"
+height="80"
+alt="simonesiega"
+style="border-radius: 50%;"
+/>
+</a>
+</p>

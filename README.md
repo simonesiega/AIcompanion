@@ -32,7 +32,7 @@
 </p>
 
 <p align="center">
-    <img src="" width="700" alt="Presentation" />
+    <img src="https://github.com/user-attachments/assets/96f102b4-5998-489a-be3b-34fd545aee5d" width="700" alt="Presentation" />
 </p>
 <p align="center">
    AIcompanion nasce per unire conversazione naturale (testo/voce) e strumenti didattici (interrogazioni e feedback) in un’unica app locale e modulare.  
